@@ -13,7 +13,7 @@ export default defineConfig({
     server: {
         host: '0.0.0.0',
         hmr: {
-            host: 'redesigned-tribble-947v5x4x652974x-5173.app.github.dev', // Βάλ' το ακριβές URL του Vite σου χωρίς το https://
+            host: 'localhost',
         },
     },
 });
