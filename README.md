@@ -7,6 +7,33 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Installation
+
+### Requirements
+
+- PHP 8.3 or later
+- Composer
+- Node.js and npm
+
+### Setup
+
+From the project directory, create the SQLite database file and run the setup script:
+
+```bash
+touch database/database.sqlite
+composer run setup
+```
+
+The setup script installs PHP and JavaScript dependencies, creates the `.env` file, generates the application key, runs database migrations, and builds the frontend assets. SQLite is used by default; update the database settings in `.env` before setup if you use another database.
+
+Start the local development processes with:
+
+```bash
+composer run dev
+```
+
+Then open [http://localhost:8000](http://localhost:8000).
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
