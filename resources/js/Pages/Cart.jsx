@@ -1,9 +1,11 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, useForm, usePage } from '@inertiajs/react';
 import StorefrontLayout from '@/Components/StorefrontLayout';
-import { formatPrice, products } from '@/data/products';
 import useStorefront from '@/hooks/useStorefront';
+import { formatPrice } from '@/utils/formatPrice';
 
 export default function Cart() {
+    const { catalog, errors: pageErrors } = usePage().props;
+    const products = catalog?.products ?? [];
     const { cart, removeFromCart, setQuantity } = useStorefront();
     const items = Object.entries(cart)
         .map(([key, quantity]) => {
@@ -21,6 +23,17 @@ export default function Cart() {
         (total, item) => total + item.product.price * item.quantity,
         0,
     );
+    const checkout = useForm({});
+    const startCheckout = () => {
+        checkout.transform(() => ({
+            items: items.map(({ product, quantity, size }) => ({
+                slug: product.slug,
+                quantity,
+                size: size || null,
+            })),
+        }));
+        checkout.post(route('checkout.store'));
+    };
 
     return (
         <StorefrontLayout>
@@ -134,12 +147,24 @@ export default function Cart() {
                                 <span>{formatPrice(subtotal)}</span>
                             </div>
                             <p className="mt-3 text-[11px] leading-5 text-black/55">
-                                Shipping and taxes are calculated at checkout.
+                                Prices include VAT. Shipping is collected on
+                                the Stripe payment page.
                             </p>
-                            <div className="mt-6 border-t border-black/10 pt-5 text-xs leading-5 text-black/55">
-                                Secure payment and checkout are provided by
-                                Stripe.
-                            </div>
+                            {(checkout.errors.checkout || pageErrors?.checkout) && (
+                                <p className="mt-4 text-xs leading-5 text-red-700">
+                                    {checkout.errors.checkout || pageErrors.checkout}
+                                </p>
+                            )}
+                            <button
+                                type="button"
+                                onClick={startCheckout}
+                                disabled={checkout.processing}
+                                className="mt-6 block w-full bg-black px-5 py-4 text-center text-[10px] uppercase tracking-[0.14em] text-white transition disabled:opacity-60"
+                            >
+                                {checkout.processing
+                                    ? 'Opening checkout…'
+                                    : 'Checkout'}
+                            </button>
                             <Link
                                 href="/"
                                 className="mt-6 block border border-black px-5 py-4 text-center text-[10px] uppercase tracking-[0.14em] transition hover:bg-black hover:text-white"

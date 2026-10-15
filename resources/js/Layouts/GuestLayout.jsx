@@ -4,11 +4,12 @@ export default function GuestLayout({ children }) {
     return (
         <div className="min-h-screen bg-white text-[#171717]">
             <header className="flex items-center justify-between border-b border-black/10 px-5 py-5 sm:px-10">
-                <Link
-                    href="/"
-                    className="text-xl font-semibold tracking-[0.18em]"
-                >
-                    OMNISHOP
+                <Link href="/" aria-label="Omnishop home">
+                    <img
+                        src="/images/omnishop-logo.png"
+                        alt="Omnishop"
+                        className="h-14 w-14 object-contain"
+                    />
                 </Link>
                 <div className="flex items-center gap-5 text-[10px] uppercase tracking-[0.12em]">
                     <Link href={route('login')} className="hidden sm:inline">

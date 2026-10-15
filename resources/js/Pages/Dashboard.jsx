@@ -1,7 +1,9 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 
 export default function Dashboard() {
+    const { auth } = usePage().props;
+
     return (
         <AuthenticatedLayout
             header={
@@ -17,6 +19,16 @@ export default function Dashboard() {
                     <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
                         <div className="p-6 text-gray-900">
                             You're logged in!
+                            {auth.user?.is_admin && (
+                                <p className="mt-4">
+                                    <Link
+                                        href={route('admin.dashboard')}
+                                        className="underline"
+                                    >
+                                        Open the shop editor
+                                    </Link>
+                                </p>
+                            )}
                         </div>
                     </div>
                 </div>

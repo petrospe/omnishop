@@ -28,6 +28,25 @@ return [
         'region' => env('AWS_DEFAULT_REGION', 'us-east-1'),
     ],
 
+    'stripe' => [
+        'key' => env('STRIPE_KEY'),
+        'secret' => env('STRIPE_SECRET'),
+        'webhook_secret' => env('STRIPE_WEBHOOK_SECRET'),
+    ],
+
+    'erp' => [
+        'provider' => env('ERP_PROVIDER', 'softone'),
+        'url' => env('ERP_API_URL'),
+        'token' => env('ERP_API_TOKEN'),
+        'username' => env('ERP_API_USERNAME'),
+        'password' => env('ERP_API_PASSWORD'),
+        'company' => env('ERP_COMPANY'),
+        'issuer_vat' => env('ERP_ISSUER_VAT'),
+        'series' => env('ERP_INVOICE_SERIES', 'A'),
+        'timeout' => (int) env('ERP_TIMEOUT', 20),
+        'default_vat_rate' => (float) env('ERP_DEFAULT_VAT_RATE', 24),
+    ],
+
     'slack' => [
         'notifications' => [
             'bot_user_oauth_token' => env('SLACK_BOT_USER_OAUTH_TOKEN'),

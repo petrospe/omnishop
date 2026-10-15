@@ -1,19 +1,18 @@
 import { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import ProductCard from '@/Components/ProductCard';
 import StorefrontLayout from '@/Components/StorefrontLayout';
-import { categories, products } from '@/data/products';
 import useStorefront from '@/hooks/useStorefront';
 
 export default function Category({ category }) {
+    const { catalog } = usePage().props;
+    const categories = catalog?.categories ?? [];
     const [sort, setSort] = useState('recommended');
     const { wishlist, toggleWishlist } = useStorefront();
-    const title =
-        categories.find(
-            (item) => item.toLowerCase() === category.toLowerCase(),
-        ) ?? 'COLLECTION';
-    const categoryProducts = products.filter(
-        (product) => product.category === title,
+    const record = categories.find((item) => item.slug === category);
+    const title = record?.name ?? 'COLLECTION';
+    const categoryProducts = (catalog?.products ?? []).filter(
+        (product) => product.categorySlug === category,
     );
     const sortedProducts = [...categoryProducts];
 
@@ -38,25 +37,21 @@ export default function Category({ category }) {
                             {title}
                         </h1>
                         <p className="mt-3 max-w-lg text-xs leading-6 text-black/55">
-                            New shapes and considered essentials for the season
-                            ahead.
+                            {record?.description}
                         </p>
                     </div>
                     <div className="flex gap-5 text-[10px] uppercase tracking-[0.1em]">
                         {categories.map((item) => (
                             <Link
-                                key={item}
-                                href={route(
-                                    'shop.category',
-                                    item.toLowerCase(),
-                                )}
+                                key={item.slug}
+                                href={route('shop.category', item.slug)}
                                 className={
-                                    item === title
+                                    item.slug === category
                                         ? 'border-b border-black pb-1'
                                         : 'pb-1 text-black/50'
                                 }
                             >
-                                {item}
+                                {item.name}
                             </Link>
                         ))}
                     </div>

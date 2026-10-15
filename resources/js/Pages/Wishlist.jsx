@@ -1,10 +1,11 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import ProductCard from '@/Components/ProductCard';
 import StorefrontLayout from '@/Components/StorefrontLayout';
-import { products } from '@/data/products';
 import useStorefront from '@/hooks/useStorefront';
 
 export default function Wishlist() {
+    const { catalog } = usePage().props;
+    const products = catalog?.products ?? [];
     const { wishlist, toggleWishlist } = useStorefront();
     const savedProducts = wishlist
         .map((slug) => products.find((product) => product.slug === slug))

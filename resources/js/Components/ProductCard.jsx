@@ -1,5 +1,5 @@
 import { Link } from '@inertiajs/react';
-import { formatPrice } from '@/data/products';
+import { formatPrice } from '@/utils/formatPrice';
 
 export default function ProductCard({ product, saved, onToggleWishlist }) {
     return (

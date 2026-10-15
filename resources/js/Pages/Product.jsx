@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import StorefrontLayout from '@/Components/StorefrontLayout';
-import { formatPrice, products } from '@/data/products';
 import useStorefront from '@/hooks/useStorefront';
+import { formatPrice } from '@/utils/formatPrice';
 
 export default function Product({ slug }) {
-    const product = products.find((item) => item.slug === slug);
+    const { catalog } = usePage().props;
+    const product = (catalog?.products ?? []).find((item) => item.slug === slug);
     const [added, setAdded] = useState(false);
     const [selectedSize, setSelectedSize] = useState('');
     const [sizeGuideOpen, setSizeGuideOpen] = useState(false);
@@ -31,13 +32,7 @@ export default function Product({ slug }) {
     }
 
     const saved = wishlist.includes(product.slug);
-    const sizes = ['leather-shoulder-bag', 'sculptural-earrings'].includes(
-        product.slug,
-    )
-        ? ['ONE SIZE']
-        : product.slug === 'soft-leather-loafers'
-          ? ['40', '41', '42', '43']
-          : ['XS', 'S', 'M', 'L'];
+    const sizes = product.sizes?.length ? product.sizes : ['XS', 'S', 'M', 'L'];
 
     const handleAddToCart = () => {
         if (!selectedSize) {
@@ -55,12 +50,7 @@ export default function Product({ slug }) {
                 <div className="mb-6 flex gap-3 text-[10px] uppercase tracking-[0.1em] text-black/50">
                     <Link href="/">Home</Link>
                     <span>/</span>
-                    <Link
-                        href={route(
-                            'shop.category',
-                            product.category.toLowerCase(),
-                        )}
-                    >
+                    <Link href={route('shop.category', product.categorySlug)}>
                         {product.category}
                     </Link>
                     <span>/</span>
@@ -175,9 +165,7 @@ export default function Product({ slug }) {
                                 Product details
                             </h2>
                             <p className="mt-4 text-xs leading-6 text-black/60">
-                                An understated essential defined by clean lines
-                                and thoughtful proportions. Designed to move
-                                easily between everyday moments.
+                                {product.description}
                             </p>
                             <p className="mt-3 text-xs text-black/60">
                                 Ref. 0000/{product.slug.slice(0, 4).toUpperCase()}

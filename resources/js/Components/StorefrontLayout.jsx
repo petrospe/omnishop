@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
-import { categories } from '@/data/products';
 import useStorefront from '@/hooks/useStorefront';
 
 function BagIcon() {
@@ -35,13 +34,14 @@ function HeartIcon() {
 
 export default function StorefrontLayout({ children }) {
     const [menuOpen, setMenuOpen] = useState(false);
-    const { auth } = usePage().props;
+    const { auth, catalog, shop } = usePage().props;
+    const categories = catalog?.categories ?? [];
     const { cartCount, wishlist } = useStorefront();
 
     return (
         <div className="min-h-screen bg-white text-[#171717]">
             <div className="bg-[#f4f4f4] px-4 py-2 text-center text-[10px] uppercase tracking-[0.17em]">
-                Complimentary shipping on orders over $99
+                {shop?.announcement}
             </div>
             <header className="relative z-30 border-b border-black/10 bg-white">
                 <div className="mx-auto grid max-w-[1600px] grid-cols-3 items-center px-4 py-5 md:px-8">
@@ -64,14 +64,11 @@ export default function StorefrontLayout({ children }) {
                         <nav className="hidden items-center gap-4 text-[11px] uppercase tracking-[0.1em] lg:flex">
                             {categories.map((category) => (
                                 <Link
-                                    key={category}
-                                    href={route(
-                                        'shop.category',
-                                        category.toLowerCase(),
-                                    )}
+                                    key={category.slug}
+                                    href={route('shop.category', category.slug)}
                                     className="transition hover:text-black/50"
                                 >
-                                    {category}
+                                    {category.name}
                                 </Link>
                             ))}
                         </nav>
@@ -84,6 +81,14 @@ export default function StorefrontLayout({ children }) {
                         OMNISHOP
                     </Link>
                     <div className="flex items-center justify-end gap-4 sm:gap-6">
+                        {auth?.user?.is_admin && (
+                            <Link
+                                href={route('admin.dashboard')}
+                                className="hidden whitespace-nowrap text-[11px] uppercase tracking-[0.1em] sm:inline"
+                            >
+                                Edit shop
+                            </Link>
+                        )}
                         <Link
                             href={auth?.user ? route('profile.edit') : route('login')}
                             className="hidden text-[11px] uppercase tracking-[0.1em] sm:inline"
@@ -119,10 +124,10 @@ export default function StorefrontLayout({ children }) {
                 <nav className="flex items-center justify-center gap-6 border-t border-black/5 px-4 py-3 text-[10px] uppercase tracking-[0.14em] lg:hidden">
                     {categories.map((category) => (
                         <Link
-                            key={category}
-                            href={route('shop.category', category.toLowerCase())}
+                            key={category.slug}
+                            href={route('shop.category', category.slug)}
                         >
-                            {category}
+                            {category.name}
                         </Link>
                     ))}
                 </nav>
@@ -142,15 +147,15 @@ export default function StorefrontLayout({ children }) {
                                     </p>
                                     {categories.map((category) => (
                                         <Link
-                                            key={category}
+                                            key={category.slug}
                                             href={route(
                                                 'shop.category',
-                                                category.toLowerCase(),
+                                                category.slug,
                                             )}
                                             onClick={() => setMenuOpen(false)}
                                             className="text-xl uppercase tracking-[0.04em]"
                                         >
-                                            {category}
+                                            {category.name}
                                         </Link>
                                     ))}
                                 </div>
@@ -158,6 +163,14 @@ export default function StorefrontLayout({ children }) {
                                     <p className="text-[10px] uppercase tracking-[0.16em] text-black/45">
                                         Your account
                                     </p>
+                                    {auth?.user?.is_admin && (
+                                        <Link
+                                            href={route('admin.dashboard')}
+                                            onClick={() => setMenuOpen(false)}
+                                        >
+                                            Edit shop
+                                        </Link>
+                                    )}
                                     <Link href={route('login')} onClick={() => setMenuOpen(false)}>
                                         Log in
                                     </Link>
@@ -189,11 +202,12 @@ export default function StorefrontLayout({ children }) {
             <footer className="mt-20 border-t border-black/10 px-6 py-12">
                 <div className="mx-auto flex max-w-[1600px] flex-col gap-8 md:flex-row md:items-end md:justify-between">
                     <div>
-                        <Link
-                            href="/"
-                            className="text-xl font-semibold tracking-[0.18em]"
-                        >
-                            OMNISHOP
+                        <Link href="/" aria-label="Omnishop home">
+                            <img
+                                src="/images/omnishop-logo.png"
+                                alt="Omnishop"
+                                className="h-16 w-16 object-contain"
+                            />
                         </Link>
                         <p className="mt-3 text-xs text-black/55">
                             A considered wardrobe for every day.
@@ -202,13 +216,10 @@ export default function StorefrontLayout({ children }) {
                     <div className="flex flex-wrap gap-x-8 gap-y-3 text-[10px] uppercase tracking-[0.12em]">
                         {categories.map((category) => (
                             <Link
-                                key={category}
-                                href={route(
-                                    'shop.category',
-                                    category.toLowerCase(),
-                                )}
+                                key={category.slug}
+                                href={route('shop.category', category.slug)}
                             >
-                                {category}
+                                {category.name}
                             </Link>
                         ))}
                         <Link href={route('login')}>Customer care</Link>

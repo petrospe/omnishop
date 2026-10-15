@@ -1,31 +1,16 @@
-import { Head, Link } from '@inertiajs/react';
+import { Head, Link, usePage } from '@inertiajs/react';
 import ProductCard from '@/Components/ProductCard';
 import StorefrontLayout from '@/Components/StorefrontLayout';
-import { products } from '@/data/products';
 import useStorefront from '@/hooks/useStorefront';
 
-const collectionImages = [
-    {
-        name: 'WOMAN',
-        image: 'https://images.unsplash.com/photo-1539109136881-3be0616acf4b?auto=format&fit=crop&w=1300&q=85',
-        alt: 'Model in a modern tailored look',
-        slug: 'woman',
-    },
-    {
-        name: 'MAN',
-        image: 'https://images.unsplash.com/photo-1515886657613-9f3515b0c78f?auto=format&fit=crop&w=1300&q=85',
-        alt: 'Model wearing contemporary menswear',
-        slug: 'man',
-    },
-    {
-        name: 'STUDIO',
-        image: 'https://images.unsplash.com/photo-1539008835657-9e8e9680c956?auto=format&fit=crop&w=1300&q=85',
-        alt: 'Eveningwear from the Studio collection',
-        slug: 'studio',
-    },
-];
-
 export default function Welcome() {
+    const { catalog, shop } = usePage().props;
+    const categories = catalog?.categories ?? [];
+    const products = (catalog?.products ?? []).slice(0, 4);
+    const heroLines = (shop?.heroTitle ?? '').split('\n');
+    const collectionHref = shop?.heroCategorySlug
+        ? route('shop.category', shop.heroCategorySlug)
+        : '/';
     const { wishlist, toggleWishlist } = useStorefront();
 
     return (
@@ -33,25 +18,27 @@ export default function Welcome() {
             <Head title="New season collection" />
             <section className="relative min-h-[68vh] bg-[#e8e5e0] sm:min-h-[78vh]">
                 <img
-                    src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=2400&q=90"
-                    alt="The new season collection"
+                    src={shop.heroImage}
+                    alt={shop.heroImageAlt}
                     className="absolute inset-0 h-full w-full object-cover object-center"
                 />
                 <div className="absolute inset-0 bg-black/15" />
                 <div className="relative flex min-h-[68vh] flex-col items-center justify-end gap-5 px-6 pb-12 text-center text-white sm:min-h-[78vh] sm:pb-16">
                     <p className="text-[10px] uppercase tracking-[0.25em] sm:text-xs">
-                        The new collection
+                        {shop.heroEyebrow}
                     </p>
                     <h1 className="max-w-3xl text-4xl font-light uppercase leading-[0.95] tracking-[0.08em] sm:text-6xl md:text-7xl">
-                        A study in
-                        <br />
-                        quiet form
+                        {heroLines.map((line, index) => (
+                            <span key={index} className="block">
+                                {line}
+                            </span>
+                        ))}
                     </h1>
                     <Link
-                        href={route('shop.category', 'woman')}
+                        href={collectionHref}
                         className="mt-2 border border-white px-8 py-3 text-[10px] uppercase tracking-[0.16em] transition hover:bg-white hover:text-black"
                     >
-                        Discover the collection
+                        {shop.heroButtonLabel}
                     </Link>
                 </div>
             </section>
@@ -60,29 +47,29 @@ export default function Welcome() {
                 <div className="mb-8 flex items-end justify-between gap-4">
                     <div>
                         <p className="text-[10px] uppercase tracking-[0.18em] text-black/50">
-                            Explore the edit
+                            {shop.collectionsEyebrow}
                         </p>
                         <h2 className="mt-2 text-2xl font-light uppercase tracking-[0.08em] sm:text-3xl">
-                            New perspectives
+                            {shop.collectionsTitle}
                         </h2>
                     </div>
                     <Link
-                        href={route('shop.category', 'woman')}
+                        href={collectionHref}
                         className="hidden border-b border-black pb-1 text-[10px] uppercase tracking-[0.12em] sm:inline"
                     >
                         View all
                     </Link>
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
-                    {collectionImages.map((collection) => (
+                    {categories.map((collection) => (
                         <Link
-                            key={collection.name}
+                            key={collection.slug}
                             href={route('shop.category', collection.slug)}
                             className="group relative aspect-[4/5] overflow-hidden bg-[#f0efed]"
                         >
                             <img
                                 src={collection.image}
-                                alt={collection.alt}
+                                alt={collection.imageAlt}
                                 loading="lazy"
                                 className="h-full w-full object-cover transition duration-700 group-hover:scale-[1.03]"
                             />
@@ -99,21 +86,21 @@ export default function Welcome() {
                 <div className="mb-8 flex items-end justify-between gap-4">
                     <div>
                         <p className="text-[10px] uppercase tracking-[0.18em] text-black/50">
-                            Carefully considered
+                            {shop.latestEyebrow}
                         </p>
                         <h2 className="mt-2 text-2xl font-light uppercase tracking-[0.08em] sm:text-3xl">
-                            The latest edit
+                            {shop.latestTitle}
                         </h2>
                     </div>
                     <Link
-                        href={route('shop.category', 'woman')}
+                        href={collectionHref}
                         className="border-b border-black pb-1 text-[10px] uppercase tracking-[0.12em]"
                     >
                         Shop collection
                     </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4">
-                    {products.slice(0, 4).map((product) => (
+                    {products.map((product) => (
                         <ProductCard
                             key={product.slug}
                             product={product}
@@ -126,10 +113,10 @@ export default function Welcome() {
 
             <section className="mx-4 mt-16 grid bg-[#f4f3f1] px-6 py-12 text-center sm:mx-8 sm:py-16">
                 <p className="text-[10px] uppercase tracking-[0.2em] text-black/50">
-                    Made to be worn, season after season
+                    {shop.closingEyebrow}
                 </p>
                 <p className="mx-auto mt-4 max-w-xl text-xl font-light leading-relaxed sm:text-2xl">
-                    Considered pieces. A little less, a little better.
+                    {shop.closingText}
                 </p>
             </section>
         </StorefrontLayout>
