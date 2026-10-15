@@ -14,6 +14,18 @@ Route::get('/', function () {
     ]);
 });
 
+Route::get('/shop/{category}', function (string $category) {
+    return Inertia::render('Category', ['category' => $category]);
+})->whereIn('category', ['woman', 'man', 'studio'])->name('shop.category');
+
+Route::get('/product/{slug}', function (string $slug) {
+    return Inertia::render('Product', ['slug' => $slug]);
+})->name('shop.product');
+
+Route::get('/cart', fn () => Inertia::render('Cart'))->name('cart.index');
+
+Route::get('/wishlist', fn () => Inertia::render('Wishlist'))->name('wishlist.index');
+
 Route::get('/dashboard', function () {
     return Inertia::render('Dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
