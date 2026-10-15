@@ -2,10 +2,15 @@ import { defineConfig } from 'vite';
 import laravel from 'laravel-vite-plugin';
 import react from '@vitejs/plugin-react';
 
+const codespaceName = process.env.CODESPACE_NAME;
+const codespaceDomain =
+    process.env.GITHUB_CODESPACES_PORT_FORWARDING_DOMAIN ?? 'app.github.dev';
+const isCodespaces = process.env.CODESPACES === 'true' && Boolean(codespaceName);
 const hmrHost =
     process.env.VITE_HMR_HOST ??
-    'redesigned-tribble-947v5x4x652974x-5173.app.github.dev';
-const isCodespaces = hmrHost.endsWith('.app.github.dev');
+    (isCodespaces ? `${codespaceName}-5173.${codespaceDomain}` : '127.0.0.1');
+const localhostOrigins =
+    /^https?:\/\/(?:(?:[^:]+\.)?localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/;
 
 export default defineConfig({
     plugins: [
@@ -17,13 +22,23 @@ export default defineConfig({
     ],
     server: {
         host: '0.0.0.0',
-        origin: isCodespaces
-            ? `https://${hmrHost}`
-            : `http://${hmrHost}:5173`,
-        hmr: {
-            host: hmrHost,
-            protocol: isCodespaces ? 'wss' : 'ws',
-            clientPort: isCodespaces ? 443 : 5173,
+        // public/hot must point at the browser-reachable Vite URL. That URL is
+        // not the Laravel origin, so CORS has to allow the app host separately.
+        origin: isCodespaces ? `https://${hmrHost}` : `http://${hmrHost}:5173`,
+        cors: {
+            origin: [
+                localhostOrigins,
+                /^https:\/\/.*\.app\.github\.dev(?::\d+)?$/,
+            ],
         },
+        hmr: isCodespaces
+            ? {
+                  host: hmrHost,
+                  protocol: 'wss',
+                  clientPort: 443,
+              }
+            : {
+                  host: hmrHost,
+              },
     },
 });
