@@ -52,6 +52,8 @@ class HandleInertiaRequests extends Middleware
                     ->map->toStorefront(),
             ],
             'shop' => fn () => ShopSetting::current()->toStorefront(),
+            'locale' => fn () => app()->getLocale(),
+            'locales' => config('app.supported_locales', ['en', 'el']),
             'flash' => [
                 'success' => fn () => $request->session()->get('success'),
             ],

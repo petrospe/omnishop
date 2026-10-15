@@ -1,7 +1,10 @@
 import { Link } from '@inertiajs/react';
-import { formatPrice } from '@/utils/formatPrice';
+import { useTranslation } from 'react-i18next';
+import { useFormatPrice } from '@/utils/formatPrice';
 
 export default function ProductCard({ product, saved, onToggleWishlist }) {
+    const { t } = useTranslation();
+    const formatPrice = useFormatPrice();
     return (
         <article className="group min-w-0">
             <div className="relative overflow-hidden bg-[#f2f2f0]">
@@ -26,8 +29,8 @@ export default function ProductCard({ product, saved, onToggleWishlist }) {
                     onClick={() => onToggleWishlist(product.slug)}
                     aria-label={
                         saved
-                            ? `Remove ${product.name} from wishlist`
-                            : `Add ${product.name} to wishlist`
+                            ? t('product.cardRemove', { name: product.name })
+                            : t('product.cardAdd', { name: product.name })
                     }
                     aria-pressed={saved}
                     className={`absolute bottom-3 right-3 grid h-9 w-9 place-items-center rounded-full bg-white transition ${

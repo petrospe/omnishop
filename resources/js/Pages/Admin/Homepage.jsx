@@ -1,4 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -6,6 +7,7 @@ import TextInput from '@/Components/TextInput';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 export default function Homepage({ settings, categories }) {
+    const { t } = useTranslation();
     const { data, setData, put, processing, errors } = useForm(settings);
 
     const submit = (event) => {
@@ -14,8 +16,8 @@ export default function Homepage({ settings, categories }) {
     };
 
     return (
-        <AdminLayout title="Homepage">
-            <Head title="Homepage" />
+        <AdminLayout title={t('admin.homepage')}>
+            <Head title={t('admin.homepage')} />
             <form
                 onSubmit={submit}
                 className="grid max-w-3xl gap-5 border border-black/10 bg-white p-6"

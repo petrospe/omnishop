@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\StripeCheckout;
 use App\Models\Order;
 use App\Models\Product;
+use App\Models\ShopSetting;
 use App\Services\Checkout\FulfillPaidOrder;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class CheckoutController extends Controller
             $order->delete();
 
             throw ValidationException::withMessages([
-                'checkout' => 'Stripe could not open checkout. Check that STRIPE_SECRET is a valid secret key (sk_test_… or sk_live_…).',
+                'checkout' => __('checkout.stripe_failed'),
             ]);
         }
 
@@ -89,7 +90,7 @@ class CheckoutController extends Controller
     {
         return redirect()
             ->route('cart.index')
-            ->withErrors(['checkout' => 'Checkout was cancelled. Your bag is still here.']);
+            ->withErrors(['checkout' => __('checkout.cancelled')]);
     }
 
     /**
@@ -114,7 +115,7 @@ class CheckoutController extends Controller
 
             if (! $product) {
                 throw ValidationException::withMessages([
-                    'checkout' => 'One of the products in your bag is no longer available.',
+                    'checkout' => __('checkout.unavailable'),
                 ]);
             }
 
@@ -123,7 +124,7 @@ class CheckoutController extends Controller
 
             if ($sizes !== [] && ! in_array($size, $sizes, true)) {
                 throw ValidationException::withMessages([
-                    'checkout' => 'Choose a size for '.$product->name.'.',
+                    'checkout' => __('checkout.choose_size', ['name' => $product->name]),
                 ]);
             }
 
@@ -154,7 +155,7 @@ class CheckoutController extends Controller
                 'email' => $user?->email ?? 'guest@checkout.invalid',
                 'customer_name' => $user?->name ?? 'Guest',
                 'customer_country' => 'GR',
-                'currency' => 'usd',
+                'currency' => strtolower(ShopSetting::current()->resolved('currency', 'currency', 'USD')),
                 'subtotal_cents' => $netCents,
                 'vat_cents' => $vatCents,
                 'total_cents' => $grossCents,

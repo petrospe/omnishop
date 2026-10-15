@@ -1,4 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -6,6 +7,7 @@ import TextInput from '@/Components/TextInput';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 export default function Form({ category }) {
+    const { t } = useTranslation();
     const editing = Boolean(category);
     const { data, setData, post, put, processing, errors } = useForm({
         name: category?.name ?? '',
@@ -27,8 +29,8 @@ export default function Form({ category }) {
     };
 
     return (
-        <AdminLayout title={editing ? 'Edit collection' : 'Add collection'}>
-            <Head title={editing ? 'Edit collection' : 'Add collection'} />
+        <AdminLayout title={editing ? t('admin.editCollection') : t('admin.addCollection')}>
+            <Head title={editing ? t('admin.editCollection') : t('admin.addCollection')} />
             <form
                 onSubmit={submit}
                 className="grid max-w-3xl gap-5 border border-black/10 bg-white p-6"

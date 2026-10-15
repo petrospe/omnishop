@@ -1,4 +1,5 @@
 import { Head, useForm } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
@@ -6,6 +7,7 @@ import TextInput from '@/Components/TextInput';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 export default function Form({ product, categories }) {
+    const { t } = useTranslation();
     const editing = Boolean(product);
     const { data, setData, post, put, processing, errors } = useForm({
         name: product?.name ?? '',
@@ -33,8 +35,8 @@ export default function Form({ product, categories }) {
     };
 
     return (
-        <AdminLayout title={editing ? 'Edit product' : 'Add product'}>
-            <Head title={editing ? 'Edit product' : 'Add product'} />
+        <AdminLayout title={editing ? t('admin.editProduct') : t('admin.addProduct')}>
+            <Head title={editing ? t('admin.editProduct') : t('admin.addProduct')} />
             <form
                 onSubmit={submit}
                 className="grid max-w-3xl gap-5 border border-black/10 bg-white p-6"

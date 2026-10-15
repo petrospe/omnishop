@@ -1,0 +1,306 @@
+{
+    "categories": {
+        "woman": "Woman",
+        "man": "Man",
+        "studio": "Studio"
+    },
+    "nav": {
+        "menu": "Menu",
+        "close": "Close",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu",
+        "home": "Omnishop home",
+        "editShop": "Edit shop",
+        "account": "Account",
+        "logIn": "Log in",
+        "collections": "Collections",
+        "yourAccount": "Your account",
+        "createAccount": "Create account",
+        "wishlist": "Wishlist",
+        "wishlistCount_one": "Wishlist, {{count}} saved item",
+        "wishlistCount_other": "Wishlist, {{count}} saved items",
+        "bag": "Shopping bag",
+        "bagCount_one": "Shopping bag, {{count}} item",
+        "bagCount_other": "Shopping bag, {{count}} items",
+        "customerCare": "Customer care",
+        "wardrobeEyebrow": "A considered wardrobe",
+        "wardrobeText": "Modern essentials, considered details, and new perspectives on everyday style.",
+        "footerTagline": "A considered wardrobe for every day.",
+        "language": "Language",
+        "logoAlt": "Omnishop"
+    },
+    "home": {
+        "title": "New season collection",
+        "viewAll": "View all",
+        "shopCollection": "Shop collection"
+    },
+    "product": {
+        "notFound": "Product not found",
+        "continue": "Continue shopping",
+        "home": "Home",
+        "newCollection": "New collection",
+        "removeWishlist": "Remove from wishlist",
+        "addWishlist": "Add to wishlist",
+        "color": "Color: {{color}}",
+        "selectSize": "Select size",
+        "sizeGuide": "Size guide",
+        "closeSizeGuide": "Close size guide",
+        "sizeGuideBody": "Sizes are designed for a relaxed fit. If you are between sizes, we recommend choosing the smaller size.",
+        "added": "Added to your bag",
+        "addToBag": "Add to bag",
+        "selectASize": "Select a size",
+        "viewBag": "View your bag",
+        "details": "Product details",
+        "shipping": "Complimentary shipping over $99",
+        "returns": "Easy returns within 30 days",
+        "cardAdd": "Add {{name}} to wishlist",
+        "cardRemove": "Remove {{name}} from wishlist"
+    },
+    "category": {
+        "title": "{{name}} collection",
+        "home": "Home",
+        "items_one": "{{count}} item",
+        "items_other": "{{count}} items",
+        "sortBy": "Sort by",
+        "recommended": "Recommended",
+        "priceLow": "Price: low to high",
+        "priceHigh": "Price: high to low",
+        "comingSoon": "This edit is coming soon.",
+        "return": "Return to the collection"
+    },
+    "cart": {
+        "title": "Shopping bag",
+        "selection": "Your selection",
+        "items_one": "{{count}} item",
+        "items_other": "{{count}} items",
+        "empty": "Your bag is currently empty.",
+        "discover": "Discover the collection",
+        "size": "Size: {{size}}",
+        "quantity": "Quantity",
+        "quantityFor": "Quantity for {{name}}",
+        "remove": "Remove",
+        "summary": "Summary",
+        "subtotal": "Subtotal",
+        "vatNote": "Prices include VAT. Shipping is collected on the Stripe payment page.",
+        "opening": "Opening checkout…",
+        "checkout": "Checkout",
+        "continue": "Continue shopping"
+    },
+    "wishlist": {
+        "eyebrow": "Saved for later",
+        "title": "Wishlist",
+        "empty": "You have not saved any pieces yet.",
+        "explore": "Explore the collection"
+    },
+    "checkout": {
+        "confirmed": "Order confirmed",
+        "pending": "Payment pending",
+        "thanks": "Thank you",
+        "almost": "Almost there",
+        "paid": "Order {{order}} is paid. A receipt will follow once the fiscal document is issued.",
+        "waiting": "Order {{order}} is waiting for payment confirmation.",
+        "back": "Back to the shop"
+    },
+    "auth": {
+        "loginTitle": "Log in",
+        "accountEyebrow": "Your Omnishop account",
+        "welcome": "Welcome back",
+        "signInLead": "Sign in to view your orders and saved pieces.",
+        "emailAddress": "Email address",
+        "email": "Email",
+        "password": "Password",
+        "remember": "Remember me",
+        "forgot": "Forgot your password?",
+        "signingIn": "Signing in…",
+        "signIn": "Sign in",
+        "newHere": "New to Omnishop?",
+        "createAccount": "Create an account",
+        "registerTitle": "Register",
+        "join": "Join Omnishop",
+        "createHeading": "Create account",
+        "registerLead": "Keep your orders and wishlist together in one place.",
+        "name": "Name",
+        "confirmPassword": "Confirm Password",
+        "creating": "Creating account…",
+        "already": "Already registered?",
+        "continueShopping": "Continue shopping",
+        "wardrobe": "A considered wardrobe",
+        "art": "The art of getting dressed.",
+        "imageAlt": "Omnishop new season collection"
+    },
+    "admin": {
+        "shopEditor": "Shop editor",
+        "viewShop": "View shop",
+        "logOut": "Log out",
+        "overview": "Overview",
+        "products": "Products",
+        "published": "Published",
+        "collections": "Collections",
+        "homepage": "Homepage",
+        "settings": "Settings",
+        "editProduct": "Edit product",
+        "addCollection": "Add collection",
+        "editCollection": "Edit collection",
+        "removeProduct": "Remove {{name}} from the shop?",
+        "removeCollection": "Remove the {{name}} collection?",
+        "lead": "Change the products, collections, and homepage copy. The shop updates as soon as you save.",
+        "addProduct": "Add product",
+        "editHomepage": "Edit homepage",
+        "demoTitle": "Demo data",
+        "demoLead": "Sample collections and products are added on a fresh install. Insert skips anything already stored. Remove deletes only the sample records.",
+        "insert": "Insert demo data",
+        "remove": "Remove demo data",
+        "confirmRemove": "Remove the sample collections and products?"
+    },
+    "account": {
+        "dashboard": "Dashboard",
+        "profile": "Profile",
+        "logOut": "Log Out"
+    },
+    "footer": {
+        "legal": "Information",
+        "notice": "Company details",
+        "terms": "Terms of sale",
+        "privacy": "Privacy policy",
+        "cookies": "Cookies",
+        "withdrawal": "Withdrawal and returns",
+        "shipping": "Shipping and payment",
+        "phone": "Phone",
+        "email": "Email",
+        "vat": "VAT",
+        "registry": "Trade register"
+    },
+    "settings": {
+        "lead": "Currency and the company details shown on the legal pages and in the footer. Leave a field blank to keep using the value from the environment file.",
+        "currency": "Currency",
+        "currencyHint": "ISO code, for example EUR or USD. Product prices are amounts in this currency.",
+        "company": "Company name",
+        "address": "Address",
+        "city": "City",
+        "postalCode": "Postal code",
+        "country": "Country",
+        "phones": "Phones",
+        "phonesHint": "One number per line.",
+        "email": "Email",
+        "vat": "VAT number",
+        "registry": "Trade register / GEMI",
+        "save": "Save details"
+    },
+    "legal": {
+        "unnamed": "the trader",
+        "identity": "Seller",
+        "address": "Address",
+        "pages": {
+            "notice": {
+                "title": "Company details",
+                "blocks": [
+                    {
+                        "heading": "Who sells to you",
+                        "text": "This page identifies the trader, as required for online sales in the European Union. The contract is formed with the seller named below."
+                    },
+                    {
+                        "heading": "Complaints",
+                        "text": "Write to the email address above and describe the order. If we cannot resolve it, you can contact the Hellenic Consumer Ombudsman (www.synigoroskatanaloti.gr) or the consumer authority where you live."
+                    }
+                ]
+            },
+            "terms": {
+                "title": "Terms of sale",
+                "blocks": [
+                    {
+                        "heading": "The contract",
+                        "text": "A contract is formed when Stripe confirms your payment. Until then you may leave checkout without being charged. The product description, price, and these terms are part of the contract."
+                    },
+                    {
+                        "heading": "Prices",
+                        "text": "Shelf prices include VAT. Any shipping charge is shown on the Stripe payment page before you pay. The currency is {{currency}}."
+                    },
+                    {
+                        "heading": "Law",
+                        "text": "Greek law applies. If you buy as a consumer in the European Union, you may also bring a claim in the courts of the place where you live. Nothing in these terms limits rights that the law does not allow us to limit."
+                    }
+                ]
+            },
+            "privacy": {
+                "title": "Privacy policy",
+                "blocks": [
+                    {
+                        "heading": "Controller",
+                        "text": "{{company}} is the controller of your personal data for this shop. Contact us at the email address published on the company-details page."
+                    },
+                    {
+                        "heading": "What we use",
+                        "text": "We use your name, email, delivery address, phone if you give one, and the contents and status of your order. Card numbers are collected by Stripe and are not stored on this shop. We also keep the invoice data required to issue the legal retail receipt."
+                    },
+                    {
+                        "heading": "Why",
+                        "text": "We process this data to perform the sales contract, to meet tax and accounting duties, and to answer a message you send us. The legal bases are the contract, a legal obligation, and, for service messages about your order, our legitimate interest in running the shop."
+                    },
+                    {
+                        "heading": "Your rights",
+                        "text": "You may ask for access, correction, erasure, restriction, or a copy of your data, and you may object to processing based on legitimate interest. You may also lodge a complaint with the Hellenic Data Protection Authority (www.dpa.gr) or the authority in your country."
+                    }
+                ]
+            },
+            "cookies": {
+                "title": "Cookies",
+                "blocks": [
+                    {
+                        "heading": "What this shop stores",
+                        "text": "A locale cookie remembers English or Greek for one year. A session cookie keeps you signed in. The shopping bag and wishlist stay in your browser’s local storage and are not sent to us until you check out."
+                    },
+                    {
+                        "heading": "Payment",
+                        "text": "The Stripe payment page sets its own cookies to process the payment and to prevent fraud. Those cookies are used only when you open checkout."
+                    },
+                    {
+                        "heading": "Choice",
+                        "text": "The cookies above are required to run the shop, remember your language, and take payment. This shop does not use advertising cookies. You can delete cookies in your browser; the language choice and the signed-in session will then be forgotten."
+                    }
+                ]
+            },
+            "withdrawal": {
+                "title": "Withdrawal and returns",
+                "blocks": [
+                    {
+                        "heading": "Your statutory right",
+                        "text": "If you buy as a consumer, you may withdraw from the contract within 14 days after you, or someone you appoint, receive the goods. You do not have to give a reason. Tell us by a clear statement to the email on the company-details page. You may use the form below."
+                    },
+                    {
+                        "heading": "This shop’s return window",
+                        "text": "We accept a return for 30 days from delivery, which is longer than the 14-day statutory period. The same steps apply."
+                    },
+                    {
+                        "heading": "Refund",
+                        "text": "We refund all payments received from you, including standard delivery, within 14 days of your notice. We may wait until we have received the goods back, or until you have shown they were sent. The refund uses the same means of payment, unless you agree otherwise. You pay the direct cost of sending the goods back, unless the goods are faulty or we failed to tell you that you bear that cost."
+                    },
+                    {
+                        "heading": "When withdrawal does not apply",
+                        "text": "The right does not apply to goods made to your specification, goods that spoil quickly, or sealed goods that are not suitable for return once the seal is broken for health or hygiene reasons, where the seal was broken after delivery."
+                    },
+                    {
+                        "heading": "Model form",
+                        "text": "To {{company}}: I give notice that I withdraw from my contract for the following goods, ordered on [date] and received on [date]. Name, address, and date."
+                    }
+                ]
+            },
+            "shipping": {
+                "title": "Shipping and payment",
+                "blocks": [
+                    {
+                        "heading": "Before you pay",
+                        "text": "The order summary on the Stripe page shows the goods, the VAT-inclusive price, and any shipping charge. You can leave that page without paying."
+                    },
+                    {
+                        "heading": "Delivery",
+                        "text": "We deliver to the address you enter at checkout. Risk passes to you when you, or a person you appoint, take physical possession of the goods. If a free-shipping offer is running, it is stated in the announcement at the top of the shop."
+                    },
+                    {
+                        "heading": "Payment",
+                        "text": "Payment is taken by Stripe in {{currency}}. We do not store your card number. The order is confirmed when the payment succeeds."
+                    }
+                ]
+            }
+        }
+    }
+}

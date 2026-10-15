@@ -24,6 +24,16 @@ class ShopSetting extends Model
         'latest_title',
         'closing_eyebrow',
         'closing_text',
+        'currency',
+        'company_name',
+        'address',
+        'city',
+        'postal_code',
+        'country',
+        'phones',
+        'email',
+        'vat',
+        'registry',
     ];
 
     public function heroCategory(): BelongsTo
@@ -76,6 +86,44 @@ class ShopSetting extends Model
             'latestTitle' => $this->latest_title,
             'closingEyebrow' => $this->closing_eyebrow,
             'closingText' => $this->closing_text,
+            'currency' => $this->resolved('currency', 'currency', 'USD'),
+            'company' => [
+                'name' => $this->resolved('company_name', 'company_name'),
+                'address' => $this->resolved('address', 'address'),
+                'city' => $this->resolved('city', 'city'),
+                'postalCode' => $this->resolved('postal_code', 'postal_code'),
+                'country' => $this->resolved('country', 'country', 'GR'),
+                'phones' => $this->phoneList(),
+                'email' => $this->resolved('email', 'email'),
+                'vat' => $this->resolved('vat', 'vat'),
+                'registry' => $this->resolved('registry', 'registry'),
+            ],
         ];
+    }
+
+    /**
+     * A saved value wins. An empty column falls back to config/shop.php.
+     */
+    public function resolved(string $column, string $configKey, string $fallback = ''): string
+    {
+        $stored = $this->{$column};
+
+        if (is_string($stored) && $stored !== '') {
+            return $stored;
+        }
+
+        $configured = config('shop.'.$configKey, $fallback);
+
+        return is_string($configured) && $configured !== '' ? $configured : $fallback;
+    }
+
+    /**
+     * @return list<string>
+     */
+    public function phoneList(): array
+    {
+        $phones = preg_split('/[\r\n,;]+/', $this->resolved('phones', 'phones')) ?: [];
+
+        return array_values(array_filter(array_map('trim', $phones)));
     }
 }

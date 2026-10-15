@@ -1,9 +1,12 @@
 import { Head, Link, usePage } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import ProductCard from '@/Components/ProductCard';
 import StorefrontLayout from '@/Components/StorefrontLayout';
 import useStorefront from '@/hooks/useStorefront';
+import { categoryLabel } from '@/i18n';
 
 export default function Welcome() {
+    const { t } = useTranslation();
     const { catalog, shop } = usePage().props;
     const categories = catalog?.categories ?? [];
     const products = (catalog?.products ?? []).slice(0, 4);
@@ -15,7 +18,7 @@ export default function Welcome() {
 
     return (
         <StorefrontLayout>
-            <Head title="New season collection" />
+            <Head title={t('home.title')} />
             <section className="relative min-h-[68vh] bg-[#e8e5e0] sm:min-h-[78vh]">
                 <img
                     src={shop.heroImage}
@@ -57,7 +60,7 @@ export default function Welcome() {
                         href={collectionHref}
                         className="hidden border-b border-black pb-1 text-[10px] uppercase tracking-[0.12em] sm:inline"
                     >
-                        View all
+                        {t('home.viewAll')}
                     </Link>
                 </div>
                 <div className="grid grid-cols-1 gap-3 sm:grid-cols-3 sm:gap-5">
@@ -75,7 +78,7 @@ export default function Welcome() {
                             />
                             <div className="absolute inset-0 bg-black/10 transition group-hover:bg-black/20" />
                             <span className="absolute bottom-6 left-6 text-lg uppercase tracking-[0.16em] text-white">
-                                {collection.name}
+                                {categoryLabel(t, collection.slug, collection.name)}
                             </span>
                         </Link>
                     ))}
@@ -96,7 +99,7 @@ export default function Welcome() {
                         href={collectionHref}
                         className="border-b border-black pb-1 text-[10px] uppercase tracking-[0.12em]"
                     >
-                        Shop collection
+                        {t('home.shopCollection')}
                     </Link>
                 </div>
                 <div className="grid grid-cols-2 gap-x-3 gap-y-8 sm:grid-cols-3 sm:gap-x-5 lg:grid-cols-4">

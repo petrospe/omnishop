@@ -49,6 +49,33 @@ Stop the process with `Ctrl+C`. The queue must stay running in production as wel
 
 Change both passwords before any shared or public deployment. Registration at `/register` creates a normal customer. It cannot create an administrator. An administrator is a user with `is_admin` set in the database.
 
+## Company details and currency
+
+Edit these under **Settings** at `/admin/settings`. A blank field there keeps the value from `.env`:
+
+```env
+SHOP_CURRENCY=USD
+SHOP_COMPANY_NAME=
+SHOP_ADDRESS=
+SHOP_CITY=
+SHOP_POSTAL_CODE=
+SHOP_COUNTRY=GR
+SHOP_PHONES=
+SHOP_EMAIL=
+SHOP_VAT=
+SHOP_REGISTRY=
+```
+
+`SHOP_CURRENCY` is the ISO code used for prices and Stripe (`EUR`, `USD`, …). Product prices are amounts in that currency. `SHOP_PHONES` can list several numbers, one per line. `SHOP_VAT` falls back to `ERP_ISSUER_VAT` when it is empty.
+
+The footer links to the pages a consumer shop needs for sales in the European Union: company details, terms of sale, privacy, cookies, withdrawal and returns, and shipping and payment. They are served at `/legal/notice`, `/legal/terms`, `/legal/privacy`, `/legal/cookies`, `/legal/withdrawal`, and `/legal/shipping`.
+
+## Languages
+
+The shop UI is available in English (`en`) and Greek (`el`). The header switcher **EN / EL** stores the choice in a `locale` cookie for one year. `App\Http\Middleware\SetLocale` reads that cookie, then the `Accept-Language` header, and calls `app()->setLocale()`. The current locale is shared with React as the Inertia prop `locale`.
+
+Copy lives in `resources/js/locales/en.json` and `resources/js/locales/el.json`. Product names, descriptions, and homepage text stay as they were written in the editor.
+
 ## Shop
 
 | URL | Purpose |

@@ -1,13 +1,17 @@
 import { Link, usePage } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '@/Components/LanguageSwitcher';
 
 const links = [
-    { name: 'Overview', route: 'admin.dashboard' },
-    { name: 'Products', route: 'admin.products.index' },
-    { name: 'Collections', route: 'admin.categories.index' },
-    { name: 'Homepage', route: 'admin.homepage.edit' },
+    { name: 'admin.overview', route: 'admin.dashboard' },
+    { name: 'admin.products', route: 'admin.products.index' },
+    { name: 'admin.collections', route: 'admin.categories.index' },
+    { name: 'admin.homepage', route: 'admin.homepage.edit' },
+    { name: 'admin.settings', route: 'admin.settings.edit' },
 ];
 
 export default function AdminLayout({ title, children }) {
+    const { t } = useTranslation();
     const { flash, errors } = usePage().props;
     const current = usePage().url;
 
@@ -22,13 +26,14 @@ export default function AdminLayout({ title, children }) {
                             className="h-12 w-12 object-contain"
                         />
                         <p className="text-sm uppercase tracking-[0.12em]">
-                            Shop editor
+                            {t('admin.shopEditor')}
                         </p>
                     </div>
                     <div className="flex items-center gap-5 text-[10px] uppercase tracking-[0.12em]">
-                        <Link href="/">View shop</Link>
+                        <LanguageSwitcher />
+                        <Link href="/">{t('admin.viewShop')}</Link>
                         <Link href={route('logout')} method="post" as="button">
-                            Log out
+                            {t('admin.logOut')}
                         </Link>
                     </div>
                 </div>
@@ -54,7 +59,7 @@ export default function AdminLayout({ title, children }) {
                                         : 'border-transparent text-black/50'
                                 }`}
                             >
-                                {link.name}
+                                {t(link.name)}
                             </Link>
                         );
                     })}

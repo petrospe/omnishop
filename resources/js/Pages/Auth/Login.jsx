@@ -5,8 +5,10 @@ import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import GuestLayout from '@/Layouts/GuestLayout';
 import { Head, Link, useForm } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 
 export default function Login({ status, canResetPassword }) {
+    const { t } = useTranslation();
     const { data, setData, post, processing, errors, reset } = useForm({
         email: '',
         password: '',
@@ -23,17 +25,17 @@ export default function Login({ status, canResetPassword }) {
 
     return (
         <GuestLayout>
-            <Head title="Log in" />
+            <Head title={t('auth.loginTitle')} />
 
             <div className="mb-8">
                 <p className="text-[10px] uppercase tracking-[0.16em] text-black/50">
-                    Your Omnishop account
+                    {t('auth.accountEyebrow')}
                 </p>
                 <h1 className="mt-3 text-3xl font-light uppercase tracking-[0.1em]">
-                    Welcome back
+                    {t('auth.welcome')}
                 </h1>
                 <p className="mt-3 text-xs leading-6 text-black/55">
-                    Sign in to view your orders and saved pieces.
+                    {t('auth.signInLead')}
                 </p>
             </div>
 
@@ -45,7 +47,7 @@ export default function Login({ status, canResetPassword }) {
 
             <form onSubmit={submit} className="space-y-5">
                 <div>
-                    <InputLabel htmlFor="email" value="Email address" />
+                    <InputLabel htmlFor="email" value={t('auth.emailAddress')} />
 
                     <TextInput
                         id="email"
@@ -63,7 +65,7 @@ export default function Login({ status, canResetPassword }) {
                 </div>
 
                 <div>
-                    <InputLabel htmlFor="password" value="Password" />
+                    <InputLabel htmlFor="password" value={t('auth.password')} />
 
                     <TextInput
                         id="password"
@@ -89,7 +91,7 @@ export default function Login({ status, canResetPassword }) {
                             }
                         />
                         <span className="ms-2 text-xs text-gray-600">
-                            Remember me
+                            {t('auth.remember')}
                         </span>
                     </label>
                     {canResetPassword && (
@@ -97,22 +99,22 @@ export default function Login({ status, canResetPassword }) {
                             href={route('password.request')}
                             className="text-xs text-gray-600 underline underline-offset-4 hover:text-gray-900"
                         >
-                            Forgot your password?
+                            {t('auth.forgot')}
                         </Link>
                     )}
                 </div>
 
                 <PrimaryButton className="w-full" disabled={processing}>
-                    {processing ? 'Signing in…' : 'Sign in'}
+                    {processing ? t('auth.signingIn') : t('auth.signIn')}
                 </PrimaryButton>
             </form>
             <p className="mt-8 border-t border-black/10 pt-6 text-center text-xs text-black/60">
-                New to Omnishop?{' '}
+                {t('auth.newHere')}{' '}
                 <Link
                     href={route('register')}
                     className="text-black underline underline-offset-4"
                 >
-                    Create an account
+                    {t('auth.createAccount')}
                 </Link>
             </p>
         </GuestLayout>

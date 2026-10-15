@@ -1,23 +1,26 @@
 import { Head, Link, router } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/Layouts/AdminLayout';
-import { formatPrice } from '@/utils/formatPrice';
+import { useFormatPrice } from '@/utils/formatPrice';
 
 export default function Index({ products }) {
+    const { t } = useTranslation();
+    const formatPrice = useFormatPrice();
     const remove = (product) => {
-        if (confirm(`Remove ${product.name} from the shop?`)) {
+        if (confirm(t('admin.removeProduct', { name: product.name }))) {
             router.delete(route('admin.products.destroy', product.id));
         }
     };
 
     return (
-        <AdminLayout title="Products">
-            <Head title="Products" />
+        <AdminLayout title={t('admin.products')}>
+            <Head title={t('admin.products')} />
             <div className="mb-5 flex justify-end">
                 <Link
                     href={route('admin.products.create')}
                     className="bg-black px-5 py-3 text-[10px] uppercase tracking-[0.14em] text-white"
                 >
-                    Add product
+                    {t('admin.addProduct')}
                 </Link>
             </div>
             <div className="overflow-x-auto border border-black/10 bg-white">

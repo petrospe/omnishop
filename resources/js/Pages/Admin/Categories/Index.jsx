@@ -1,22 +1,24 @@
 import { Head, Link, router } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import AdminLayout from '@/Layouts/AdminLayout';
 
 export default function Index({ categories }) {
+    const { t } = useTranslation();
     const remove = (category) => {
-        if (confirm(`Remove the ${category.name} collection?`)) {
+        if (confirm(t('admin.removeCollection', { name: category.name }))) {
             router.delete(route('admin.categories.destroy', category.id));
         }
     };
 
     return (
-        <AdminLayout title="Collections">
-            <Head title="Collections" />
+        <AdminLayout title={t('admin.collections')}>
+            <Head title={t('admin.collections')} />
             <div className="mb-5 flex justify-end">
                 <Link
                     href={route('admin.categories.create')}
                     className="bg-black px-5 py-3 text-[10px] uppercase tracking-[0.14em] text-white"
                 >
-                    Add collection
+                    {t('admin.addCollection')}
                 </Link>
             </div>
             <div className="overflow-x-auto border border-black/10 bg-white">

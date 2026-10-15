@@ -1,16 +1,21 @@
 import { useState } from 'react';
 import { Head, Link, usePage } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
 import ProductCard from '@/Components/ProductCard';
 import StorefrontLayout from '@/Components/StorefrontLayout';
 import useStorefront from '@/hooks/useStorefront';
+import { categoryLabel } from '@/i18n';
 
 export default function Category({ category }) {
+    const { t } = useTranslation();
     const { catalog } = usePage().props;
     const categories = catalog?.categories ?? [];
     const [sort, setSort] = useState('recommended');
     const { wishlist, toggleWishlist } = useStorefront();
     const record = categories.find((item) => item.slug === category);
-    const title = record?.name ?? 'COLLECTION';
+    const title = record
+        ? categoryLabel(t, record.slug, record.name)
+        : t('nav.collections');
     const categoryProducts = (catalog?.products ?? []).filter(
         (product) => product.categorySlug === category,
     );
@@ -24,12 +29,12 @@ export default function Category({ category }) {
 
     return (
         <StorefrontLayout>
-            <Head title={`${title} collection`} />
+            <Head title={t('category.title', { name: title })} />
             <div className="mx-auto max-w-[1600px] px-4 py-8 sm:px-8 sm:py-12">
                 <div className="flex flex-col gap-8 border-b border-black/10 pb-7 sm:flex-row sm:items-end sm:justify-between">
                     <div>
                         <div className="mb-4 flex gap-4 text-[10px] uppercase tracking-[0.12em] text-black/50">
-                            <Link href="/">Home</Link>
+                            <Link href="/">{t('category.home')}</Link>
                             <span>/</span>
                             <span>{title}</span>
                         </div>
@@ -51,27 +56,33 @@ export default function Category({ category }) {
                                         : 'pb-1 text-black/50'
                                 }
                             >
-                                {item.name}
+                                {categoryLabel(t, item.slug, item.name)}
                             </Link>
                         ))}
                     </div>
                 </div>
                 <div className="flex items-center justify-between py-5 text-[10px] uppercase tracking-[0.1em]">
-                    <span>{categoryProducts.length} items</span>
+                    <span>
+                        {t('category.items', { count: categoryProducts.length })}
+                    </span>
                     <label
                         htmlFor="product-sort"
                         className="flex items-center gap-3"
                     >
-                        Sort by
+                        {t('category.sortBy')}
                         <select
                             id="product-sort"
                             value={sort}
                             onChange={(event) => setSort(event.target.value)}
                             className="border-0 bg-transparent py-1 pr-5 text-[10px] uppercase tracking-[0.1em] focus:ring-0"
                         >
-                            <option value="recommended">Recommended</option>
-                            <option value="price-low">Price: low to high</option>
-                            <option value="price-high">Price: high to low</option>
+                            <option value="recommended">
+                                {t('category.recommended')}
+                            </option>
+                            <option value="price-low">{t('category.priceLow')}</option>
+                            <option value="price-high">
+                                {t('category.priceHigh')}
+                            </option>
                         </select>
                     </label>
                 </div>
@@ -88,12 +99,12 @@ export default function Category({ category }) {
                     </div>
                 ) : (
                     <div className="py-24 text-center">
-                        <p className="text-sm">This edit is coming soon.</p>
+                        <p className="text-sm">{t('category.comingSoon')}</p>
                         <Link
                             href="/"
                             className="mt-5 inline-block border-b border-black pb-1 text-[10px] uppercase tracking-[0.12em]"
                         >
-                            Return to the collection
+                            {t('category.return')}
                         </Link>
                     </div>
                 )}

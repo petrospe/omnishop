@@ -1,6 +1,9 @@
 import { useState } from 'react';
 import { Link, usePage } from '@inertiajs/react';
+import { useTranslation } from 'react-i18next';
+import LanguageSwitcher from '@/Components/LanguageSwitcher';
 import useStorefront from '@/hooks/useStorefront';
+import { categoryLabel } from '@/i18n';
 
 function BagIcon() {
     return (
@@ -34,9 +37,11 @@ function HeartIcon() {
 
 export default function StorefrontLayout({ children }) {
     const [menuOpen, setMenuOpen] = useState(false);
+    const { t } = useTranslation();
     const { auth, catalog, shop } = usePage().props;
     const categories = catalog?.categories ?? [];
     const { cartCount, wishlist } = useStorefront();
+    const label = (category) => categoryLabel(t, category.slug, category.name);
 
     return (
         <div className="min-h-screen bg-white text-[#171717]">
@@ -50,7 +55,7 @@ export default function StorefrontLayout({ children }) {
                             type="button"
                             onClick={() => setMenuOpen((open) => !open)}
                             aria-expanded={menuOpen}
-                            aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+                            aria-label={menuOpen ? t('nav.closeMenu') : t('nav.openMenu')}
                             className="flex items-center gap-2 text-[11px] uppercase tracking-[0.12em]"
                         >
                             <span className="flex w-5 flex-col gap-[5px]">
@@ -58,7 +63,7 @@ export default function StorefrontLayout({ children }) {
                                 <span className="h-px w-3/4 bg-black" />
                             </span>
                             <span className="hidden sm:inline">
-                                {menuOpen ? 'Close' : 'Menu'}
+                                {menuOpen ? t('nav.close') : t('nav.menu')}
                             </span>
                         </button>
                         <nav className="hidden items-center gap-4 text-[11px] uppercase tracking-[0.1em] lg:flex">
@@ -68,7 +73,7 @@ export default function StorefrontLayout({ children }) {
                                     href={route('shop.category', category.slug)}
                                     className="transition hover:text-black/50"
                                 >
-                                    {category.name}
+                                    {label(category)}
                                 </Link>
                             ))}
                         </nav>
@@ -76,7 +81,7 @@ export default function StorefrontLayout({ children }) {
                     <Link
                         href="/"
                         className="justify-self-center text-[22px] font-semibold leading-none tracking-[0.2em] sm:text-[28px]"
-                        aria-label="Omnishop home"
+                        aria-label={t('nav.home')}
                     >
                         OMNISHOP
                     </Link>
@@ -86,19 +91,20 @@ export default function StorefrontLayout({ children }) {
                                 href={route('admin.dashboard')}
                                 className="hidden whitespace-nowrap text-[11px] uppercase tracking-[0.1em] sm:inline"
                             >
-                                Edit shop
+                                {t('nav.editShop')}
                             </Link>
                         )}
                         <Link
                             href={auth?.user ? route('profile.edit') : route('login')}
                             className="hidden text-[11px] uppercase tracking-[0.1em] sm:inline"
                         >
-                            {auth?.user ? 'Account' : 'Log in'}
+                            {auth?.user ? t('nav.account') : t('nav.logIn')}
                         </Link>
+                        <LanguageSwitcher />
                         <Link
                             href={route('wishlist.index')}
                             className="relative"
-                            aria-label={`Wishlist, ${wishlist.length} saved items`}
+                            aria-label={t('nav.wishlistCount', { count: wishlist.length })}
                         >
                             <HeartIcon />
                             {wishlist.length > 0 && (
@@ -110,7 +116,7 @@ export default function StorefrontLayout({ children }) {
                         <Link
                             href={route('cart.index')}
                             className="relative"
-                            aria-label={`Shopping bag, ${cartCount} items`}
+                            aria-label={t('nav.bagCount', { count: cartCount })}
                         >
                             <BagIcon />
                             {cartCount > 0 && (
@@ -127,7 +133,7 @@ export default function StorefrontLayout({ children }) {
                             key={category.slug}
                             href={route('shop.category', category.slug)}
                         >
-                            {category.name}
+                            {label(category)}
                         </Link>
                     ))}
                 </nav>
@@ -135,7 +141,7 @@ export default function StorefrontLayout({ children }) {
                     <>
                         <button
                             type="button"
-                            aria-label="Close menu"
+                            aria-label={t('nav.closeMenu')}
                             onClick={() => setMenuOpen(false)}
                             className="fixed inset-0 top-[98px] z-30 cursor-default bg-black/20"
                         />
@@ -143,7 +149,7 @@ export default function StorefrontLayout({ children }) {
                             <div className="mx-auto grid max-w-[1400px] gap-10 sm:grid-cols-2 lg:grid-cols-4">
                                 <div className="flex flex-col gap-4">
                                     <p className="text-[10px] uppercase tracking-[0.16em] text-black/45">
-                                        Collections
+                                        {t('nav.collections')}
                                     </p>
                                     {categories.map((category) => (
                                         <Link
@@ -155,43 +161,40 @@ export default function StorefrontLayout({ children }) {
                                             onClick={() => setMenuOpen(false)}
                                             className="text-xl uppercase tracking-[0.04em]"
                                         >
-                                            {category.name}
+                                            {label(category)}
                                         </Link>
                                     ))}
                                 </div>
                                 <div className="flex flex-col gap-4">
                                     <p className="text-[10px] uppercase tracking-[0.16em] text-black/45">
-                                        Your account
+                                        {t('nav.yourAccount')}
                                     </p>
                                     {auth?.user?.is_admin && (
                                         <Link
                                             href={route('admin.dashboard')}
                                             onClick={() => setMenuOpen(false)}
                                         >
-                                            Edit shop
+                                            {t('nav.editShop')}
                                         </Link>
                                     )}
                                     <Link href={route('login')} onClick={() => setMenuOpen(false)}>
-                                        Log in
+                                        {t('nav.logIn')}
                                     </Link>
                                     <Link href={route('register')} onClick={() => setMenuOpen(false)}>
-                                        Create account
+                                        {t('nav.createAccount')}
                                     </Link>
                                     <Link href={route('wishlist.index')} onClick={() => setMenuOpen(false)}>
-                                        Wishlist
+                                        {t('nav.wishlist')}
                                     </Link>
                                     <Link href={route('cart.index')} onClick={() => setMenuOpen(false)}>
-                                        Shopping bag
+                                        {t('nav.bag')}
                                     </Link>
                                 </div>
                                 <div className="hidden flex-col gap-3 text-xs leading-6 text-black/60 lg:flex">
                                     <p className="text-[10px] uppercase tracking-[0.16em] text-black/45">
-                                        A considered wardrobe
+                                        {t('nav.wardrobeEyebrow')}
                                     </p>
-                                    <p>
-                                        Modern essentials, considered details,
-                                        and new perspectives on everyday style.
-                                    </p>
+                                    <p>{t('nav.wardrobeText')}</p>
                                 </div>
                             </div>
                         </div>
@@ -200,30 +203,63 @@ export default function StorefrontLayout({ children }) {
             </header>
             <main>{children}</main>
             <footer className="mt-20 border-t border-black/10 px-6 py-12">
-                <div className="mx-auto flex max-w-[1600px] flex-col gap-8 md:flex-row md:items-end md:justify-between">
+                <div className="mx-auto grid max-w-[1600px] gap-10 md:grid-cols-3">
                     <div>
-                        <Link href="/" aria-label="Omnishop home">
+                        <Link href="/" aria-label={t('nav.home')}>
                             <img
                                 src="/images/omnishop-logo.png"
-                                alt="Omnishop"
+                                alt={t('nav.logoAlt')}
                                 className="h-16 w-16 object-contain"
                             />
                         </Link>
                         <p className="mt-3 text-xs text-black/55">
-                            A considered wardrobe for every day.
+                            {t('nav.footerTagline')}
                         </p>
+                        <address className="mt-4 space-y-1 text-xs not-italic leading-5 text-black/70">
+                            {shop?.company?.name && <p>{shop.company.name}</p>}
+                            {shop?.company?.address && <p>{shop.company.address}</p>}
+                            {(shop?.company?.postalCode || shop?.company?.city) && (
+                                <p>
+                                    {[shop.company.postalCode, shop.company.city]
+                                        .filter(Boolean)
+                                        .join(' ')}
+                                </p>
+                            )}
+                            {(shop?.company?.phones ?? []).map((phone) => (
+                                <p key={phone}>
+                                    <a href={`tel:${phone.replace(/\s/g, '')}`}>{phone}</a>
+                                </p>
+                            ))}
+                            {shop?.company?.email && (
+                                <p>
+                                    <a href={`mailto:${shop.company.email}`}>
+                                        {shop.company.email}
+                                    </a>
+                                </p>
+                            )}
+                        </address>
                     </div>
-                    <div className="flex flex-wrap gap-x-8 gap-y-3 text-[10px] uppercase tracking-[0.12em]">
+                    <div className="flex flex-col gap-3 text-[10px] uppercase tracking-[0.12em]">
                         {categories.map((category) => (
                             <Link
                                 key={category.slug}
                                 href={route('shop.category', category.slug)}
                             >
-                                {category.name}
+                                {label(category)}
                             </Link>
                         ))}
-                        <Link href={route('login')}>Customer care</Link>
+                        <Link href={route('login')}>{t('nav.customerCare')}</Link>
                     </div>
+                    <nav className="flex flex-col gap-3 text-[10px] uppercase tracking-[0.12em]">
+                        <p className="text-black/45">{t('footer.legal')}</p>
+                        {['notice', 'terms', 'privacy', 'cookies', 'withdrawal', 'shipping'].map(
+                            (page) => (
+                                <Link key={page} href={route('legal.show', page)}>
+                                    {t(`footer.${page}`)}
+                                </Link>
+                            ),
+                        )}
+                    </nav>
                 </div>
             </footer>
         </div>
